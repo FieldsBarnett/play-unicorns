@@ -1,0 +1,15 @@
+.board {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh);
+    padding: calc(-1 * var(--hand-height) / 4.5) 0 calc(-1 * var(--hand-height) / 4.5) 0;
+  }
+  
+  .decks {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }

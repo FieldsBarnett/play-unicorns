@@ -1,0 +1,12 @@
+.placeholder {
+    border-radius: 10px;
+    box-shadow: 0 0 32px 10px rgba(0,0,0,.6);
+}
+
+.placeholder:hover {
+    box-shadow: 0 0 40px 20px rgba(200,190,0,.7);
+}
+
+.placeholder * {
+    visibility: hidden;
+}

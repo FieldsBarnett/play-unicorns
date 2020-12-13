@@ -1,0 +1,202 @@
+html, body, #app, #root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'OstrichSans-Heavy';
+}
+
+html {
+  background: rgb(0,104,227);
+  background: linear-gradient(120deg, rgba(0,104,227,1) 0%, rgba(0,212,255,1) 100%);
+}
+
+.lobby .controls .warning {
+  color: darkred;
+  height: 35px;
+  margin-top: -35px;
+  font-size: 2vw;
+  animation: bounce .2s ease-out;
+}
+
+.lobby {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  font-size: 4vw;
+  color: whitesmoke;
+  margin: 0 auto;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'OstrichSans-Heavy';
+  font-size: inherit;
+  margin: 100px 0 10px 0;
+  height: 10vh;
+  width: 100%;
+}
+
+.controls .enter-active,
+.controls .enter-active:hover {
+  animation: flip-in .3s ease-out backwards;
+}
+.controls .exit-active {
+  animation: flip-out .3s ease-in forwards;
+}
+
+.playerName-enter-active {
+  animation: flip-in .3s ease-out backwards;
+}
+
+.playerName-exit-active {
+  animation: flip-out .3s ease-in forwards;
+}
+
+.namesContainer div {
+  text-align: center;
+}
+
+.controls * {
+  font-size: inherit;
+  height: 100%;
+  font-family: inherit;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+.nameControl {
+  display: flex;
+  width: 100%;
+}
+
+.controls input {
+  width: 70%;
+  padding: 7px;
+  color: black;
+  background: #f2f2f2;
+}
+
+.controls button {
+  width: 30%;
+  border: 2px solid black;
+  background: linear-gradient(120deg, rgb(134, 211, 226) 0%, rgb(92, 151, 223) 100%);
+  background-size: 400% 400%;
+  animation: animatedGradient 4s ease infinite;
+  padding: 0;
+}
+
+.controls .start {
+  width: 100%;
+  height: 100%;
+}
+
+.controls button:hover {
+  animation: animatedGradient 1s ease infinite;
+  box-shadow: 0 0 30px whitesmoke;
+}
+
+/*.controls button:focus {
+  animation: bounce .3s ease, animatedGradient 1s ease infinite;
+}*/
+
+@keyframes animatedGradient {
+  0%{background-position:0% 0%}
+  50%{background-position:100% 100%}
+  100%{background-position:0% 0%}
+}
+
+@keyframes bounce {
+  0%{transform: scale(1, 1)}
+  45%{transform: scale(.5, .5)}
+  90%{transform: scale(1.1, 1.1)}
+  100%{transform: scale(1, 1)}
+}
+
+@keyframes flip-out {
+  0%   {transform: rotateY(0deg);}
+  100% {transform: rotateY(90deg);}
+}
+@keyframes flip-in {
+  0%   {transform: rotateY(-90deg);}
+  100% {transform: rotateY(0deg);}
+}
+
+*:focus {
+  outline: none;
+}
+
+
+@keyframes wowzors {
+
+  1% {
+    opacity: 0%;
+  }
+
+  10% {
+    opacity: 100%;
+    transform: rotate(360deg) translateX(150px) translateY(400px) rotate(-360deg) rotateY(360deg);
+  }
+
+  20% {
+    transform: rotate(720deg) translateX(150px) translateY(350px) rotate(-720deg) rotateY(720deg) ;
+  }
+
+  30% {
+    transform: rotate(1080deg) translateX(150px) translateY(300px) rotate(-1080deg) rotateY(1080deg) ;
+  }
+
+  40% {
+    transform: rotate(1440deg) translateX(150px) translateY(250px) rotate(-1440deg) rotateY(1440deg) ;
+  }
+
+  50% {
+    transform: rotate(1800deg) translateX(150px) translateY(200px) rotate(-1800deg) rotateY(1800deg) ;
+  }
+
+  60% {
+    transform: rotate(1440deg) translateX(150px) translateY(150px) rotate(-1440deg) rotateY(1440deg) ;
+  }
+
+  70% {
+    transform: rotate(1080deg) translateX(150px) translateY(0px) rotate(1080deg) rotateX(180deg);
+  }
+}
+
+@keyframes simpleEntrance {
+
+  0% {
+    opacity: 0%;
+    transform: translate3d(-2000px,500px,0) scale(10);
+  }
+
+  1% {
+    opacity: 100%
+  }
+
+  40% {
+    transform: translate3d(2000px,0px,0) scale(5);
+  }
+  50% {
+    transform: translate3d(-2000px,-100px,0) scale(3);
+  }
+  60% {
+    transform: translate3d(2000px,100px,0) scale(2);
+  }
+  70% {
+    transform: translate3d(-2000px,400px,0) scale(.1);
+  }
+
+  75% {
+    transform: translate3d(0px,0px,0) scale(.1);
+  }
+
+  80% {
+    transform:  rotate(360deg) translateX(150px) rotate(-360deg)
+  }
+
+}

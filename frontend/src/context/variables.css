@@ -1,0 +1,9 @@
+:root {
+    --hand-height: -14.5vw;
+    --played-card-height: 20vh;
+    --hand-hover-scale: 1.6;
+    --stable-hover-scale: 2.5;
+    --header-size: 50px;
+    --animation-delay: 0s;
+}
+/* card aspect ratio: 0.72235294117 */

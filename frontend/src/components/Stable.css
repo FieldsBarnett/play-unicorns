@@ -1,0 +1,87 @@
+@import '../context/variables.css';
+
+.stable {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 7px 0 7px 0;
+}
+
+.stable div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+/* All Cards */
+.stable div * {
+    height: var(--played-card-height);
+    transition: 0.25s;
+    transition-timing-function: ease-out;
+    position: relative; /* To make Z index work */
+    margin: auto 2px;
+}
+
+/* Card hover in others stable*/
+.stable div img:hover {
+    transform: translateY(calc(6.5vh * var(--stable-hover-scale))) scale(var(--stable-hover-scale), var(--stable-hover-scale));
+    z-index: 100;
+}
+
+/* Card hover in your own stable*/
+.stable.self div img:hover {
+    transform: translateY(calc(-6.5vh * var(--stable-hover-scale))) scale(var(--stable-hover-scale), var(--stable-hover-scale));
+}
+
+.stable-card-enter-active {
+  animation: bounce-in-bck 0.7s ease-out backwards var(--animation-delay);
+}
+
+.stable div .stable-card-exit {
+  transition-duration: .7s !important;
+}
+
+
+.stable-card-exit-active {
+  transform: scale(3);
+  filter: blur(40px);
+  opacity: 0;
+}
+
+  @keyframes bounce-in-bck {
+    0% {
+      transform: scale(7);
+      animation-timing-function: ease-in;
+      opacity: 0;
+    }
+    38% {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+      opacity: 1;
+    }
+    55% {
+      transform: scale(1.5);
+      animation-timing-function: ease-in;
+    }
+    72% {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+    81% {
+      transform: scale(1.24);
+      animation-timing-function: ease-in;
+    }
+    89% {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+    95% {
+      transform: scale(1.04);
+      animation-timing-function: ease-in;
+    }
+    100% {
+      transform: scale(1);
+      animation-timing-function: ease-out;
+    }
+  }
+  
