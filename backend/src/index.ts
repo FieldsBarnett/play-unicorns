@@ -4,7 +4,7 @@ import { GameStateController } from './GameStateController';
 
 const app = express();
 var http = require('http').Server(app);
-const port = 4000;
+const port = process.env.PORT || 4000;
 
 const io: SocketIO.Server = require("socket.io")(http, {
   cors: {
