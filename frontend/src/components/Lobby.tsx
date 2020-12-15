@@ -13,10 +13,9 @@ export default function Lobby(props: any) {
       console.log('players', players);
       setPlayers(players);
     });
-    socket.on('nameTaken', () => {
-      console.log('nameTaken');
+    socket.on('badName', (reason: string) => {
       props.setName("");
-      setWarning("Someone else is using that name");
+      setWarning(reason);
     });
   }, [1]);
 

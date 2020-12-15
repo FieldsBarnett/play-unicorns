@@ -39,14 +39,14 @@ io.on('connection', (socket) => {
   socket.on('join', (sentName: string) => {
     let name = sentName.toUpperCase();
 
+    // Check not null or blank
+    if (!sentName) socket.emit('badName', "You must enter a name");
     // Check unique
     if (Object.values(socketNames).includes(name)) {
-      console.log('taken');
-      socket.emit('nameTaken');
+      socket.emit('badName', "Someone else is using that name");
       return;
     }
 
-    console.log('unique');
     socketNames[socket.id] = name;
     io.emit('players', Object.values(socketNames));
   });
