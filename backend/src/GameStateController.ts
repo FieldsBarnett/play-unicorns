@@ -29,10 +29,9 @@ export class GameStateController {
             pack.forEach( (specification: CardSpecification) => {
                 let belongingDeck = (specification.type === CardType.BABY_UNICORN) ? nursery : deck;
                 [...Array(specification.amount)].forEach( () => {
-                    belongingDeck.push(
-                        {uid: cardNumber, id: specification.id, type: specification.type}
-                    );
-                    cardNumber++;
+                    belongingDeck.push({uid: cardNumber++, id: specification.id, type: specification.type});
+                    // Double cards if lots of players
+                    if (this.state.playerStates.length >= 6) belongingDeck.push({uid: cardNumber++, id: specification.id, type: specification.type});
                 })
             })
         });
