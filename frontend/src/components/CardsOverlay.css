@@ -1,0 +1,29 @@
+.overlay {
+    z-index: 999;
+    height: 100%;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, .4);
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    overflow: auto;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.overlay img {
+    height: 20vw;
+}
+
+.overlay div {
+    transition: transform .25s ease-out;
+}
+
+.overlay div:hover{
+    transform: scale(1.2, 1.2);
+}

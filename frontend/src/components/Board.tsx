@@ -6,6 +6,7 @@ import { Deck } from './Deck';
 import socket from '../context/socket';
 import { Opponents } from './Opponents';
 import { Card, CardType, GameState } from '../context/models';
+import { CardsOverlay } from './CardsOverlay';
 
 let nursery: Card[] = [
   {id: 'Baby Back', type: CardType.INSTANT }, {id: 'Baby Back', type: CardType.INSTANT }
@@ -33,6 +34,7 @@ export default function Board(props: any) {
 
   return (
       <div className="board">
+        <CardsOverlay/>
         <Opponents opponentStates={opponentStates} selectedCard={gameState.selectedCard} key={opponentStates}/>
         <div className="decks">
           <Deck cards={nursery} deckType="nursery"/>

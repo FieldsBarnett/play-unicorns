@@ -32,6 +32,10 @@ export function Deck( props: DeckProps) {
         // Cancel out normal onClick of card
     }
 
+    function search() {
+        socket.emit('search', props.deckType);
+    }
+
     function draw() {
         socket.emit('draw', props.deckType);
     };
@@ -40,7 +44,7 @@ export function Deck( props: DeckProps) {
         <div className="deck" onClick={draw}>
         {displayedCards.map((card: Card, index) => {
             return (
-                <div className="animation-container" key={card.uid}>
+                <div className="animation-container" key={card.uid} onContextMenu={search}>
                     <CardFace onClick={doNothing} id={card.id} chaos={chaos} useOffset={props.useOffset}/>
                 </div>
             );

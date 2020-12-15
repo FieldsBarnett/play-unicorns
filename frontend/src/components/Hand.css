@@ -26,7 +26,7 @@
 
 .hand.self {
   bottom: var(--hand-height);
-  transition: transform .35s ease-out;
+  transition: transform .25s ease-out;
   animation: bounce-top .6s none;
 }
 

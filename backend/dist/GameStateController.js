@@ -28,8 +28,10 @@ class GameStateController {
             pack.forEach((specification) => {
                 let belongingDeck = (specification.type === models_1.CardType.BABY_UNICORN) ? nursery : deck;
                 [...Array(specification.amount)].forEach(() => {
-                    belongingDeck.push({ uid: cardNumber, id: specification.id, type: specification.type });
-                    cardNumber++;
+                    belongingDeck.push({ uid: cardNumber++, id: specification.id, type: specification.type });
+                    // Double cards if lots of players
+                    if (this.state.playerStates.length >= 6)
+                        belongingDeck.push({ uid: cardNumber++, id: specification.id, type: specification.type });
                 });
             });
         });
@@ -105,36 +107,49 @@ class GameStateController {
         }
     }
     targetCard(uid) {
+        this.removeCard(uid);
+        // Add to discard pile
+        this.state.discardPile.push(this.getCard(uid));
+    }
+    removeCard(uid) {
         // Remove from hand or stable
         for (let i = 0; i < this.state.playerStates.length; i++) {
             let playerState = this.state.playerStates[i];
             playerState.hand = playerState.hand.filter(card => card.uid != uid);
             playerState.stable = playerState.stable.filter(card => card.uid != uid);
         }
-        // Add to discard pile
-        this.state.discardPile.push(this.getCard(uid));
+        // Remove from decks
+        this.state.deck = this.state.deck.filter(card => card.uid != uid);
+        this.state.discardPile = this.state.discardPile.filter(card => card.uid != uid);
+        this.state.nursery = this.state.nursery.filter(card => card.uid != uid);
     }
-    stealCard(theifName, uid) {
-        // Remove from hand or stable
-        let wasInHand = false;
-        for (let i = 0; i < this.state.playerStates.length; i++) {
-            let playerState = this.state.playerStates[i];
-            playerState.hand = playerState.hand.filter(card => {
-                if (card.uid == uid)
-                    wasInHand = true;
-                return card.uid != uid;
-            });
-            playerState.stable = playerState.stable.filter(card => card.uid != uid);
-        }
-        // Add to discard pile
+    takeCard(theifName, uid, toStable) {
+        if (this.getCard(uid).type == models_1.CardType.BABY_UNICORN)
+            toStable = true;
+        this.removeCard(uid);
         let theifState = this.getPlayerState(theifName);
-        if (wasInHand)
-            theifState.hand.push(this.getCard(uid));
-        else
+        if (toStable)
             theifState.stable.push(this.getCard(uid));
+        else
+            theifState.hand.push(this.getCard(uid));
     }
     getState(playerName) {
         return this.state.playerStates.find((playerState) => playerState.name == playerName);
+    }
+    getChoices(target) {
+        // If its a deck
+        switch (target) {
+            case "nursery":
+                return this.state.nursery;
+            case "discardPile":
+                return this.state.discardPile;
+            case "deck":
+                return this.state.deck;
+        }
+        // If its a player
+        let targetPlayer = this.getPlayerState(target);
+        if (targetPlayer)
+            return targetPlayer.hand;
     }
 }
 exports.GameStateController = GameStateController;

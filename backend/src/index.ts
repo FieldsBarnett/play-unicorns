@@ -68,7 +68,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('stealCard', (cardUid: number) => {
-    stateController.stealCard(socketNames[socket.id], cardUid);
+    stateController.takeCard(socketNames[socket.id], cardUid);
     io.emit('gameState', stateController.state);
   });
 
@@ -79,8 +79,17 @@ io.on('connection', (socket) => {
   })
 
   socket.on('start', () => {
-    console.log('start');
     stateController = new GameStateController(Object.values(socketNames));
+    io.emit('gameState', stateController.state);
+  })
+
+  socket.on('search', (searchTarget) => {
+    let choices = stateController.getChoices(searchTarget);
+    io.emit('choices', choices);
+  })
+
+  socket.on('choose', choiceUid => {
+    stateController.takeCard(socketNames[socket.id], choiceUid);
     io.emit('gameState', stateController.state);
   })
 });
