@@ -58,11 +58,16 @@ export class GameStateController {
             })
         } else {
             let dealtCards: Card[];
-            if (deckType == 'nursery') dealtCards = this.state.nursery.splice(-cards);
-            else if (deckType == 'discardPile') return;
-            else dealtCards = this.state.deck.splice(-cards); // deck
             let selectedPlayerState = this.getPlayerState(player);
-            selectedPlayerState.hand = selectedPlayerState.hand.concat(dealtCards);
+            if (deckType == 'nursery') {
+                dealtCards = this.state.nursery.splice(-cards);
+                selectedPlayerState.stable = selectedPlayerState.stable.concat(dealtCards);
+            }
+            else if (deckType == 'discardPile') return;
+            else {
+                dealtCards = this.state.deck.splice(-cards); // deck
+                selectedPlayerState.hand = selectedPlayerState.hand.concat(dealtCards);
+            }
         }
     }
 

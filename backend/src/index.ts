@@ -2,9 +2,7 @@ import express from 'express';
 import { GameStateController } from './GameStateController';
 
 // TODO
-// Use two decks for 6+ players
 // Keep track of turns
-// Add searching decks
 // Add steal/target based on what you can do
 // Detect win
 
