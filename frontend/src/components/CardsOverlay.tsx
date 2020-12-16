@@ -14,18 +14,22 @@ export function CardsOverlay() {
         })
     }, [1]);
 
+    function doNothing() {}
+
     function choose(e: any) {
         socket.emit('choose', e.target.dataset.uid);
         setCards(null);
     }
 
     return (
-        <div className="overlay" style={cards ? {display: "flex"}:{}}>
+        <div className="overlay" style={(cards && cards.length) ? {display: "block"}:{}}>
+            <div className="cardOptions">
             {cards?.map((card: Card) => 
                 <div className="cardContainer">
-                    <CardFace id={card.id} uid={card.uid} onClick={choose} />
+                    <CardFace id={card.id} uid={card.uid} onClick={choose} onContextMenu={doNothing} />
                 </div>
             )}
+            </div>
         </div>
     );
 }

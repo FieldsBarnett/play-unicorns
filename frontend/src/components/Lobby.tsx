@@ -29,7 +29,6 @@ export default function Lobby(props: any) {
     setWarning("");
   }
   function start() {
-    console.log('start');
     socket.emit('start');
   }
 

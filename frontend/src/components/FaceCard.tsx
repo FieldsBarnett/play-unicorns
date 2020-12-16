@@ -4,6 +4,7 @@ import './FaceCard.css'
 
 type CardProps = {
     onClick?: any;
+    onContextMenu?: any;
 }
 
 export function CardFace( props: CardProps | any ) {
@@ -33,7 +34,7 @@ export function CardFace( props: CardProps | any ) {
             data-uid={props.uid}
             className="card"
             onClick={props.onClick || stealCard}
-            onContextMenu={destroyCard}
+            onContextMenu={props.onContextMenu || destroyCard}
             src={'../cards/' + props.id + '.jpg'} alt={props.id}
             style={props.chaos ? { transform: 'rotate('+rotation+'deg) translate('+offset+'px,'+offset+'px)'} : {}}/>
     )
