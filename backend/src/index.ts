@@ -79,6 +79,10 @@ io.on('connection', (socket) => {
   })
 
   socket.on('start', () => {
+    if (Object.keys(socketNames).length < 2) {
+      io.emit('badName', "You can't play by yourself!");
+      return;
+    }
     stateController = new GameStateController(Object.values(socketNames));
     io.emit('gameState', stateController.state);
   })
