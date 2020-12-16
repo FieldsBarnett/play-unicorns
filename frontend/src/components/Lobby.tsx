@@ -17,6 +17,9 @@ export default function Lobby(props: any) {
       props.setName("");
       setWarning(reason);
     });
+    socket.on('badStart', (reason: string) => {
+      setWarning(reason);
+    });
   }, [1]);
 
   function join() {
