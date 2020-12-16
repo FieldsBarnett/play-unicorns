@@ -5,6 +5,7 @@ import { GameStateController } from './GameStateController';
 // Keep track of turns
 // Add steal/target based on what you can do
 // Detect win
+// Rework deck backs and add animation for draw
 
 const app = express();
 var http = require('http').Server(app);

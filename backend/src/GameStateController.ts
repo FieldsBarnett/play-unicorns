@@ -54,7 +54,7 @@ export class GameStateController {
         if (player === undefined) {
             // Deal to all players if not specified
             this.state.playerStates.forEach((playerState) => {
-                this.deal(cards, playerState.name);
+                this.deal(cards, playerState.name, deckType);
             })
         } else {
             let dealtCards: Card[];

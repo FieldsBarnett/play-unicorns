@@ -25,6 +25,7 @@ export function Deck( props: DeckProps) {
 
     useEffect(() => {
         socket.on('drawAnimation', (playerName: string) => {
+            
         });
     }, [1])
 
@@ -32,7 +33,8 @@ export function Deck( props: DeckProps) {
         // Cancel out normal onClick of card
     }
 
-    function search() {
+    function search(e: any) {
+        e.preventDefault();
         socket.emit('search', props.deckType);
     }
 
@@ -45,7 +47,7 @@ export function Deck( props: DeckProps) {
         {displayedCards.map((card: Card, index) => {
             return (
                 <div className="animation-container" key={card.uid} onContextMenu={search}>
-                    <CardFace onClick={doNothing} id={card.id} chaos={chaos} useOffset={props.useOffset}/>
+                    <CardFace onClick={doNothing} onContextMenu={doNothing} id={card.id} chaos={chaos} useOffset={props.useOffset}/>
                 </div>
             );
         })}
