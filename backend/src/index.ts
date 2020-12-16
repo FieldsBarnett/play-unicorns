@@ -89,7 +89,7 @@ io.on('connection', (socket) => {
 
   socket.on('search', (searchTarget) => {
     let choices = stateController.getChoices(searchTarget);
-    io.emit('choices', choices);
+    socket.emit('choices', choices);
   })
 
   socket.on('choose', choiceUid => {
