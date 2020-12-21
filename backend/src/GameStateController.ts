@@ -1,4 +1,4 @@
-import { Card, CardSpecification, CardType, GameState } from "./models";
+import { Card, CardSpecification, CardType, GameState, Phase } from "./models";
 import { baseDeck1 } from "./packs";
 
 export class GameStateController {
@@ -8,6 +8,7 @@ export class GameStateController {
 
     state = new GameState();
     cardIndex: any = {};
+    private turnPlayerNumber: number;
 
     init(playerNames: string[], packs: CardSpecification[][]) {
         this.state.selectedCard = null;
@@ -18,6 +19,8 @@ export class GameStateController {
             this.state.playerStates.push( { name: playerName, hand: [], stable: [this.state.nursery.pop()]} )
         });
         this.deal(5);
+        this.turnPlayerNumber = Math.floor(Math.random() * this.state.playerStates.length);
+        this.state.turn = this.state.playerStates[this.turnPlayerNumber].name;
     }
 
     private populateDecks(packs: CardSpecification[][]) {
@@ -25,13 +28,13 @@ export class GameStateController {
         let deck: Card[] = [];
         let cardNumber = 0;
         // Generate
-        packs.forEach( (pack: CardSpecification[]) => {
-            pack.forEach( (specification: CardSpecification) => {
-                let belongingDeck = (specification.type === CardType.BABY_UNICORN) ? nursery : deck;
-                [...Array(specification.amount)].forEach( () => {
-                    belongingDeck.push({uid: cardNumber++, id: specification.id, type: specification.type});
+        packs.forEach( (pack: any) => {
+            Object.keys(pack).forEach( (id: string) => {
+                let belongingDeck = (pack[id].type === CardType.BABY) ? nursery : deck;
+                [...Array(pack[id].amount)].forEach( () => {
+                    belongingDeck.push({uid: cardNumber++, id: id, type: pack[id].type});
                     // Double cards if lots of players
-                    if (this.state.playerStates.length >= 6) belongingDeck.push({uid: cardNumber++, id: specification.id, type: specification.type});
+                    if (this.state.playerStates.length >= 6) belongingDeck.push({uid: cardNumber++, id: id, type: pack[id].type});
                 })
             })
         });
@@ -90,7 +93,7 @@ export class GameStateController {
             this.state.discardPile.push(card);
             this.state.selectedCard = null;
         }
-        else if (card.type === CardType.BASIC_UNICORN || card.type === CardType.MAGICAL_UNICORN || CardType.BABY_UNICORN) {
+        else if (card.type === CardType.BASIC || card.type === CardType.MAGICAL || CardType.BABY) {
             // to own stable
             playerState.hand = playerState.hand.filter(card => card.uid != uid); // remove from hand
             this.getPlayerState(player).stable.push(card);
@@ -132,7 +135,7 @@ export class GameStateController {
     }
 
     takeCard(theifName:string, uid: number, toStable?: boolean) {
-        if (this.getCard(uid).type == CardType.BABY_UNICORN) toStable = true;
+        if (this.getCard(uid).type == CardType.BABY) toStable = true;
         
         this.removeCard(uid);
         let theifState = this.getPlayerState(theifName);
@@ -140,11 +143,13 @@ export class GameStateController {
         else theifState.hand.push(this.getCard(uid));
     }
 
+    // Gets the state of a player
     getState(playerName: string) {
         return this.state.playerStates.find((playerState) => playerState.name == playerName);
     }
 
-    getChoices(target: string) {
+    // Get the options for a choose card request
+    getChoices(target: string): Card[] {
         // If its a deck
         switch (target) {
             case "nursery":
@@ -158,4 +163,26 @@ export class GameStateController {
         let targetPlayer = this.getPlayerState(target);
         if (targetPlayer) return targetPlayer.hand;
     }
+
+    // advance the phase or turn of the game and award actions
+    advancePhase() {
+        // Advance game
+        if (this.state.phase == Phase.EOT) {
+            this.state.phase = Phase.BOT;
+            this.turnPlayerNumber = (this.turnPlayerNumber+1) % this.state.playerStates.length;
+            this.state.turn = this.state.playerStates[this.turnPlayerNumber].name;
+        }
+        // Award actions
+        switch (this.state.phase) {
+            case Phase.BOT:
+                // award actions based on stable cards
+                break;
+            case Phase.DRAW:
+
+        }
+    }
+
+    
+
+    
 }

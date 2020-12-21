@@ -5,7 +5,29 @@ import { GameStateController } from './GameStateController';
 // Keep track of turns
 // Add steal/target based on what you can do
 // Detect win
-// Rework deck backs and add animation for draw
+// Add animation for draw
+
+/*
+turn var point to player
+when an activation condition happens, set capabilities and remove them when completed or declined
+
+
+//Turn phases
+START
+  check for triggered effects
+DRAW
+  Give right amount of draw actions
+PLAY
+  Give right number of play actions
+END
+  discard cards if over 7
+
+When out of actions, go to next phase or turn
+
+actions: After each action, check for triggered effects and give appropriate actions
+
+indicator for whos action and turn it is
+*/
 
 const app = express();
 var http = require('http').Server(app);

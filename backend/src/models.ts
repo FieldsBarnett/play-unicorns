@@ -1,14 +1,59 @@
-import { Socket } from "socket.io";
 
 export enum CardType {
-    BABY_UNICORN,
-    BASIC_UNICORN,
-    MAGICAL_UNICORN,
+    BABY,
+    BASIC,
+    MAGICAL,
     MAGIC,
     INSTANT,
     UPGRADE,
-    DOWNGRADE
-  }
+    DOWNGRADE,
+    ULTIMATE
+}
+
+export enum Phase {
+    BOT,
+    DRAW,
+    ACTION,
+    EOT
+}
+
+export enum ActionType {
+    CHOOSE,
+    DESTROY, 
+    Discard,
+    DRAW,
+    PLAY,
+    PULL,
+    REPLACE, 
+    RETURN,
+    SACRIFICE, 
+    STEAL
+}
+
+export enum TriggerType {
+    BOT_PHASE,
+    DRAW_PHASE,
+    ACTION_PHASE,
+    EOT_PHASE,
+    ENTER_STABLE,
+    LEAVE_STABLE,
+}
+
+export type Trigger = {
+    type: TriggerType,
+    constraints?: Constraint[],
+}
+
+export enum ContraintType {
+    WITHNAME,
+    PLAYER,
+    TYPE,
+}
+
+export type Constraint = {
+    type: ContraintType;
+    value: string;
+}
 
 export class GameState {
     constructor(){
@@ -17,7 +62,9 @@ export class GameState {
             deck: [],
             nursery: [],
             discardPile: [],
-            selectedCard: undefined
+            selectedCard: undefined,
+            turn: undefined,
+            phase: Phase.BOT
         }
     }
     playerStates: PlayerState[];
@@ -25,12 +72,20 @@ export class GameState {
     nursery: Card[];
     discardPile: Card[];
     selectedCard: Card;
+    turn: string;
+    phase: Phase;
+}
+
+export type Action = {
+    type: ActionType;
+    constraints: Constraint[];
 }
 
 export type PlayerState = {
     name: string;
     hand: Card[];
     stable: Card[];
+    actions: Action[];
 }
 
 export type Card = {
@@ -43,6 +98,7 @@ export type CardSpecification = {
     id: string;
     type: CardType;
     amount: number;
+    triggers?: Trigger;
 }
 
 export type PlayerSummary = {

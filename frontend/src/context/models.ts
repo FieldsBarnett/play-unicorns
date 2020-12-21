@@ -22,11 +22,19 @@ export type Card = {
 }
 
 export enum CardType {
-    BABY_UNICORN,
-    BASIC_UNICORN,
-    MAGICAL_UNICORN,
+    BABY,
+    BASIC,
+    MAGICAL,
     MAGIC,
     INSTANT,
     UPGRADE,
-    DOWNGRADE
+    DOWNGRADE,
+    ULTIMATE
+}
+
+export enum Phase {
+    BOT,
+    DRAW,
+    ACTION,
+    EOT
 }
