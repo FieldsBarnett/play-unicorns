@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import { Card } from '../context/models';
+import { Card, CardType } from '../context/models';
 import socket from '../context/socket';
 import './Deck.css'
 import { CardFace } from './FaceCard';
 
 type DeckProps = {
-    cards: Card[];
-    cardsDisplayed?: number;
+    cards?: Card[];
+    cardsDisplayed: number;
     chaos?: number;
     useOffset?: boolean;
     deckType?: string;
+    myName: string;
 }
 
 type Position = {
@@ -17,11 +18,22 @@ type Position = {
     offset: number;
 }
 
+let nurseryCards: Card[] = [
+    {id: 'Baby Back', type: CardType.INSTANT }, {id: 'Baby Back', type: CardType.INSTANT }
+  ];
+  
+  let deckCards: Card[] = [
+    {id: 'Back', type: CardType.INSTANT }, {id: 'Back', type: CardType.INSTANT }, {id: 'Back', type: CardType.INSTANT }, {id: 'Back', type: CardType.INSTANT }
+  ];
+
 export function Deck( props: DeckProps) {
 
     let chaos = props.chaos || 10;
-    let numToDisplay = props.cardsDisplayed || props.cards.length;
-    let displayedCards = props.cards.slice(0, numToDisplay);
+    let numToDisplay = props.cardsDisplayed;
+    let cards: Card[] | undefined = [];
+    if (props.deckType != "discardPile") cards = (props.deckType == "nursery") ? nurseryCards : deckCards;
+    else cards = props.cards;
+    let displayedCards = cards?.slice(0, numToDisplay);
 
     useEffect(() => {
         socket.on('drawAnimation', (playerName: string) => {
@@ -42,9 +54,9 @@ export function Deck( props: DeckProps) {
         socket.emit('draw', props.deckType);
     };
 
-    let deck = props.cards.length ? (
+    let deck = cards?.length ? (
         <div className="deck" onClick={draw}>
-        {displayedCards.map((card: Card, index) => {
+        {displayedCards?.map((card: Card, index) => {
             return (
                 <div className="animation-container" key={card.uid} onContextMenu={search}>
                     <CardFace onClick={doNothing} onContextMenu={doNothing} id={card.id} chaos={chaos} useOffset={props.useOffset}/>

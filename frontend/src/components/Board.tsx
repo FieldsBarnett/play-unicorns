@@ -5,17 +5,8 @@ import { Stable } from './Stable';
 import { Deck } from './Deck';
 import socket from '../context/socket';
 import { Opponents } from './Opponents';
-import { Card, CardType, GameState } from '../context/models';
+import {  GameState } from '../context/models';
 import { CardsOverlay } from './CardsOverlay';
-
-let nursery: Card[] = [
-  {id: 'Baby Back', type: CardType.INSTANT }, {id: 'Baby Back', type: CardType.INSTANT }
-];
-
-let deck: Card[] = [
-  {id: 'Back', type: CardType.INSTANT }, {id: 'Back', type: CardType.INSTANT }, {id: 'Back', type: CardType.INSTANT }, {id: 'Back', type: CardType.INSTANT }
-];
-
 
 export default function Board(props: any) {
   const [gameState, setGameState] = useState<GameState>(
@@ -37,9 +28,9 @@ export default function Board(props: any) {
         <CardsOverlay/>
         <Opponents opponentStates={opponentStates} selectedCard={gameState.selectedCard} key={opponentStates}/>
         <div className="decks">
-          <Deck cards={nursery} deckType="nursery"/>
-          <Deck cards={deck} deckType="deck"/>
-          <Deck cards={gameState.discardPile} cardsDisplayed={10} chaos={20} useOffset={true} deckType="discardPile"/>
+          <Deck deckType="nursery" cardsDisplayed={2} myName={props.myName}/>
+          <Deck deckType="deck" cardsDisplayed={4} myName={props.myName}/>
+          <Deck cards={gameState.discardPile} cardsDisplayed={10} chaos={20} useOffset={true} deckType="discardPile"  myName={props.myName}/>
         </div>
         <div>
           <Stable cards={myState.stable} isSelf={true} selectedCard={gameState.selectedCard} playerName={props.myName}/>
